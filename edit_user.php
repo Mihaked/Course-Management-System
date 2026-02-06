@@ -1,6 +1,6 @@
 <?php
 $page_title = 'Edit User';
-include '../includes/header.php';
+include 'includes/header.php';
 check_role(['admin']);
 
 if (!isset($_GET['id'])) {
@@ -37,7 +37,7 @@ $result = $conn->query($sql_get);
 
 if ($result->num_rows == 0) {
     echo "<div class='alert alert-danger'>User not found.</div>";
-    include '../includes/footer.php';
+    include 'includes/footer.php';
     exit();
 }
 
@@ -87,4 +87,4 @@ $user = $result->fetch_assoc();
     </div>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

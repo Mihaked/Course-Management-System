@@ -1,6 +1,6 @@
 <?php
 $page_title = 'Add User';
-include '../includes/header.php'; 
+include 'includes/header.php'; 
 check_role(['admin']); 
 ?>
 
@@ -51,4 +51,4 @@ check_role(['admin']);
     </div>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

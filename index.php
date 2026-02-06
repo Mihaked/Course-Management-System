@@ -2,9 +2,9 @@
 session_start(); 
 
 if (isset($_SESSION['role'])) {
-    if ($_SESSION['role'] === 'admin') header("Location: admin/dashboard.php");
-    elseif ($_SESSION['role'] === 'instructor') header("Location: instructor/index.php");
-    elseif ($_SESSION['role'] === 'student') header("Location: student/index.php");
+    if ($_SESSION['role'] === 'admin') header("Location: dashboard.php");
+    elseif ($_SESSION['role'] === 'instructor') header("Location: manage_materials.php");
+    elseif ($_SESSION['role'] === 'student') header("Location: student_dashboard.php");
     exit();
 }
 ?>
@@ -129,6 +129,9 @@ if (isset($_SESSION['role'])) {
 
 <button type="submit" name="login" class="btn btn-login">Login Now</button> 
        </form>
+        <div class="mt-3">
+            <a href="register.php" class="text-decoration-none fw-semibold">Create a new student account</a>
+        </div>
         <div class="mt-4 text-center">
             <p class="text-muted small mb-1">CMS System &copy; <?php echo date('Y'); ?></p>
             <p class="text-muted small">

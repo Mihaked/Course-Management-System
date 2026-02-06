@@ -1,6 +1,6 @@
 <?php
 $page_title = 'Manage Users';
-include '../includes/header.php'; 
+include 'includes/header.php'; 
 check_role(['admin']); 
 
 $filter_role = isset($_GET['role']) ? $_GET['role'] : 'all';
@@ -86,4 +86,4 @@ $result = $conn->query($sql);
     </div>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

@@ -1,6 +1,6 @@
 <?php
 $page_title = 'Course Assignments';
-include '../includes/header.php'; 
+include 'includes/header.php'; 
 check_role(['student']); 
 
 $course_id = (int)$_GET['course_id'];
@@ -83,4 +83,4 @@ if($check_sub->num_rows > 0) {
     <?php endwhile; ?>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

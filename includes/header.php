@@ -2,11 +2,6 @@
 
 if (session_status() === PHP_SESSION_NONE) { session_start(); }
 
-$path_prefix = '';
-if (strpos($_SERVER['PHP_SELF'], '/admin/') !== false || strpos($_SERVER['PHP_SELF'], '/student/') !== false || strpos($_SERVER['PHP_SELF'], '/instructor/') !== false) {
-    $path_prefix = '../';
-}
-
 include dirname(__FILE__) . '/auth_check.php';
 include dirname(__FILE__) . '/db_connection.php';
 
@@ -19,12 +14,28 @@ $current_role = $_SESSION['role'];
 $page_title = isset($page_title) ? $page_title : "CMS Dashboard";
 $nav_items = [];
 
+$role_home = [
+    'admin' => 'dashboard.php',
+    'instructor' => 'manage_materials.php',
+    'student' => 'student_dashboard.php',
+];
+
 if ($current_role == 'admin') {
-    $nav_items = ['Dashboard' => 'dashboard.php', 'Manage Users' => 'users.php', 'Manage Courses' => 'courses.php', 'Enrollments' => 'enrollments.php'];
+    $nav_items = [
+        'Dashboard' => 'dashboard.php',
+        'Manage Users' => 'users.php',
+        'Manage Courses' => 'courses.php',
+        'Enrollments' => 'enrollments.php'
+    ];
 } elseif ($current_role == 'instructor') {
-    $nav_items = ['My Courses' => 'index.php', 'Manage Materials' => 'manage_materials.php'];
+    $nav_items = [
+        'Manage Materials' => 'manage_materials.php',
+        'Manage Assignments' => 'manage_assignments.php'
+    ];
 } elseif ($current_role == 'student') {
-    $nav_items = ['My Courses' => 'index.php', 'Enrollment' => 'enroll.php'];
+    $nav_items = [
+        'Dashboard' => 'student_dashboard.php'
+    ];
 }
 
 $display_name = isset($_SESSION['full_name']) ? $_SESSION['full_name'] : $_SESSION['username'];
@@ -86,7 +97,7 @@ $display_name = isset($_SESSION['full_name']) ? $_SESSION['full_name'] : $_SESSI
 
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
     <div class="container-fluid">
-        <a class="navbar-brand fw-bold" href="<?php echo $path_prefix . $current_role; ?>/index.php">
+        <a class="navbar-brand fw-bold" href="<?php echo $role_home[$current_role] ?? 'index.php'; ?>">
             <i class="bi bi-mortarboard-fill me-2"></i>CMS System
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -112,7 +123,7 @@ $display_name = isset($_SESSION['full_name']) ? $_SESSION['full_name'] : $_SESSI
                             <li><a class="dropdown-item" href="index.php?view=grades">Grades</a></li>
                             <li><hr class="dropdown-divider"></li>
                         <?php endif; ?>
-                        <li><a class="dropdown-item text-danger" href="<?php echo $path_prefix; ?>logout.php">Logout</a></li>
+                        <li><a class="dropdown-item text-danger" href="logout.php">Logout</a></li>
                     </ul>
                 </li>
             </ul>

@@ -1,7 +1,7 @@
 <?php
 session_start();
-include '../includes/db_connection.php';
-include '../includes/activity_stack.php'; 
+include 'includes/db_connection.php';
+include 'includes/activity_stack.php'; 
 
 if (!isset($_POST['add_user'])) {
     header("Location: users.php");

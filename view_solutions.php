@@ -1,6 +1,6 @@
 <?php
 $page_title = 'View Solutions & Grade';
-include '../includes/header.php'; 
+include 'includes/header.php'; 
 check_role(['instructor']); 
 
 $assignment_id = (int)$_GET['assignment_id'];
@@ -77,4 +77,4 @@ $solutions = $conn->query("
     </div>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

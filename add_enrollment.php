@@ -1,6 +1,6 @@
 <?php
 $page_title = 'Enroll Student';
-include '../includes/header.php'; 
+include 'includes/header.php'; 
 check_role(['admin']); 
 
 $students = $conn->query("SELECT id, username FROM users WHERE role='student'");
@@ -55,4 +55,4 @@ $courses = $conn->query("SELECT id, title, course_code FROM courses");
     </div>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>
