@@ -1,6 +1,6 @@
 <?php
 $page_title = 'Manage Materials';
-include '../includes/header.php'; 
+include 'includes/header.php'; 
 check_role(['instructor']); 
 
 if (!isset($_GET['course_id'])) {
@@ -14,7 +14,7 @@ $instructor_id = $_SESSION['user_id'];
 $check = $conn->query("SELECT title FROM courses WHERE id=$course_id AND instructor_id=$instructor_id");
 if ($check->num_rows == 0) {
     echo "<div class='alert alert-danger'>Access Denied! You do not teach this course.</div>";
-    include '../includes/footer.php';
+    include 'includes/footer.php';
     exit();
 }
 $course = $check->fetch_assoc();
@@ -141,4 +141,4 @@ $materials = $conn->query("SELECT * FROM materials WHERE course_id=$course_id OR
     </div>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

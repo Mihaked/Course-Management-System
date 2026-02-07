@@ -1,16 +1,28 @@
 <?php
 $page_title = 'Course Materials';
-include '../includes/header.php'; 
+include 'includes/header.php'; 
 check_role(['student']); 
 
 if (!isset($_GET['course_id'])) { header("Location: index.php"); exit(); }
 $course_id = (int)$_GET['course_id'];
 $student_id = $_SESSION['user_id'];
 
-$check = $conn->query("SELECT * FROM enrollments WHERE student_id=$student_id AND course_id=$course_id");
-if ($check->num_rows == 0) { echo "<div class='alert alert-danger'>Access Denied.</div>"; include '../includes/footer.php'; exit(); }
-
 $course = $conn->query("SELECT * FROM courses WHERE id=$course_id")->fetch_assoc();
+if (!$course) {
+    echo "<div class='alert alert-danger'>Course not found.</div>";
+    include 'includes/footer.php';
+    exit();
+}
+
+$check = $conn->query("SELECT * FROM enrollments WHERE student_id=$student_id AND course_id=$course_id");
+$profile = $conn->query("SELECT level, semester FROM student_profiles WHERE student_id=$student_id")->fetch_assoc();
+$matches_track = $profile && (int)$profile['level'] === (int)$course['level'] && (int)$profile['semester'] === (int)$course['semester'];
+
+if ($check->num_rows == 0 && !$matches_track) {
+    echo "<div class='alert alert-danger'>Access Denied.</div>";
+    include 'includes/footer.php';
+    exit();
+}
 $materials = $conn->query("SELECT * FROM materials WHERE course_id=$course_id ORDER BY id DESC");
 ?>
 
@@ -32,7 +44,7 @@ $materials = $conn->query("SELECT * FROM materials WHERE course_id=$course_id OR
         <div>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-1">
-                    <li class="breadcrumb-item"><a href="index.php" class="text-dark text-decoration-none">My Courses</a></li>
+                    <li class="breadcrumb-item"><a href="student_dashboard.php" class="text-dark text-decoration-none">My Courses</a></li>
                     <li class="breadcrumb-item active" aria-current="page"><?php echo htmlspecialchars($course['course_code']); ?></li>
                 </ol>
             </nav>
@@ -81,4 +93,4 @@ $materials = $conn->query("SELECT * FROM materials WHERE course_id=$course_id OR
 
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

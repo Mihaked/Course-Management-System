@@ -1,6 +1,6 @@
 <?php
 $page_title = 'Edit Course';
-include '../includes/header.php';
+include 'includes/header.php';
 check_role(['admin']);
 
 if (!isset($_GET['id'])) {
@@ -14,8 +14,16 @@ if (isset($_POST['update_course'])) {
     $code = $conn->real_escape_string($_POST['code']);
     $title = $conn->real_escape_string($_POST['title']);
     $desc = $conn->real_escape_string($_POST['description']);
+    $level = (int)$_POST['level'];
+    $semester = (int)$_POST['semester'];
     $instructor_id = (int)$_POST['instructor_id'];
 
+    $valid_levels = [1, 2, 3, 4];
+    $valid_semesters = [1, 2];
+
+    if (!in_array($level, $valid_levels, true) || !in_array($semester, $valid_semesters, true)) {
+        $error = "Please select a valid level and semester.";
+    } else {
     $check = $conn->query("SELECT id FROM courses WHERE course_code='$code' AND id != $id");
     
     if ($check->num_rows > 0) {
@@ -25,6 +33,8 @@ if (isset($_POST['update_course'])) {
                 course_code='$code', 
                 title='$title', 
                 description='$desc', 
+                level=$level,
+                semester=$semester,
                 instructor_id=$instructor_id 
                 WHERE id=$id";
 
@@ -36,12 +46,13 @@ if (isset($_POST['update_course'])) {
             $error = "Error updating: " . $conn->error;
         }
     }
+    }
 }
 
 $course = $conn->query("SELECT * FROM courses WHERE id=$id")->fetch_assoc();
 if (!$course) {
     echo "<div class='alert alert-danger'>Course not found.</div>";
-    include '../includes/footer.php';
+    include 'includes/footer.php';
     exit();
 }
 
@@ -74,6 +85,29 @@ $instructors = $conn->query("SELECT id, username FROM users WHERE role='instruct
                         <textarea name="description" class="form-control" rows="3"><?php echo htmlspecialchars($course['description']); ?></textarea>
                     </div>
 
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Level</label>
+                            <select name="level" class="form-select" required>
+                                <?php for ($lvl = 1; $lvl <= 4; $lvl++): ?>
+                                    <option value="<?php echo $lvl; ?>" <?php if ((int)$course['level'] === $lvl) echo 'selected'; ?>>
+                                        Level <?php echo $lvl; ?>
+                                    </option>
+                                <?php endfor; ?>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Semester</label>
+                            <select name="semester" class="form-select" required>
+                                <?php for ($sem = 1; $sem <= 2; $sem++): ?>
+                                    <option value="<?php echo $sem; ?>" <?php if ((int)$course['semester'] === $sem) echo 'selected'; ?>>
+                                        Semester <?php echo $sem; ?>
+                                    </option>
+                                <?php endfor; ?>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="mb-3">
                         <label class="form-label">Instructor</label>
                         <select name="instructor_id" class="form-select" required>
@@ -95,4 +129,4 @@ $instructors = $conn->query("SELECT id, username FROM users WHERE role='instruct
     </div>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

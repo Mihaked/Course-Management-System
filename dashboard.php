@@ -2,7 +2,7 @@
 
 $page_title = 'Dashboard';
 
-include '../includes/header.php'; 
+include 'includes/header.php'; 
 
 check_role(['admin']); 
 
@@ -48,7 +48,7 @@ $stats = [
 </div>
 
 <?php 
-include '../includes/activity_stack.php';
+include 'includes/activity_stack.php';
 $activities = get_stack_activities(); 
 ?>
 
@@ -80,5 +80,5 @@ $activities = get_stack_activities();
 <br>
 
 <?php 
-include '../includes/footer.php'; 
+include 'includes/footer.php'; 
 ?>

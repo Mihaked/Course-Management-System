@@ -1,6 +1,6 @@
 <?php
 $page_title = 'Add Assignment';
-include '../includes/header.php'; 
+include 'includes/header.php'; 
 check_role(['instructor']); 
 
 if (!isset($_GET['course_id'])) { header("Location: index.php"); exit(); }
@@ -56,4 +56,4 @@ if (isset($_POST['upload_sheet'])) {
     </div>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

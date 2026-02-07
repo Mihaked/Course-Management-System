@@ -1,6 +1,6 @@
 <?php
 $page_title = 'Manage Enrollments';
-include '../includes/header.php'; 
+include 'includes/header.php'; 
 check_role(['admin']); 
 
 $sql = "SELECT enrollments.enrollment_date, 
@@ -54,4 +54,4 @@ $result = $conn->query($sql);
     </div>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

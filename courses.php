@@ -1,6 +1,6 @@
 <?php
 $page_title = 'Manage Courses';
-include '../includes/header.php'; 
+include 'includes/header.php'; 
 check_role(['admin']); 
 
 $sql = "SELECT courses.*, 
@@ -26,6 +26,8 @@ $result = $conn->query($sql);
                     <tr>
                         <th>Code</th>
                         <th>Title</th>
+                        <th>Level</th>
+                        <th>Semester</th>
                         <th>Instructor</th>
                         <th>Actions</th>
                     </tr>
@@ -47,6 +49,8 @@ $result = $conn->query($sql);
                             <td><span class="badge bg-primary"><?php echo htmlspecialchars($row['course_code']); ?></span></td>
                             
                             <td><?php echo htmlspecialchars($row['title']); ?></td>
+                            <td><?php echo htmlspecialchars($row['level']); ?></td>
+                            <td><?php echo htmlspecialchars($row['semester']); ?></td>
                             
                             <td>
                                 👨‍🏫 <?php echo htmlspecialchars($instr_display); ?>
@@ -59,7 +63,7 @@ $result = $conn->query($sql);
                         </tr>
                         <?php endwhile; ?>
                     <?php else: ?>
-                        <tr><td colspan="4" class="text-center">No courses found.</td></tr>
+                        <tr><td colspan="6" class="text-center">No courses found.</td></tr>
                     <?php endif; ?>
                 </tbody>
             </table>
@@ -67,4 +71,4 @@ $result = $conn->query($sql);
     </div>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

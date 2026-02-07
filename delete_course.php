@@ -1,7 +1,7 @@
 <?php
 session_start();
-include '../includes/db_connection.php';
-include '../includes/auth_check.php';
+include 'includes/db_connection.php';
+include 'includes/auth_check.php';
 
 check_role(['admin']);
 

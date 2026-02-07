@@ -1,6 +1,6 @@
 <?php
 $page_title = 'Student Submissions';
-include '../includes/header.php'; 
+include 'includes/header.php'; 
 check_role(['instructor']); 
 
 if (!isset($_GET['course_id'])) {
@@ -14,7 +14,7 @@ $instructor_id = $_SESSION['user_id'];
 $check = $conn->query("SELECT title FROM courses WHERE id=$course_id AND instructor_id=$instructor_id");
 if ($check->num_rows == 0) {
     echo "<div class='alert alert-danger'>Access Denied.</div>";
-    include '../includes/footer.php';
+    include 'includes/footer.php';
     exit();
 }
 $course = $check->fetch_assoc();
@@ -63,4 +63,4 @@ $result = $conn->query($sql);
     </div>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

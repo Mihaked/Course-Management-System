@@ -54,6 +54,8 @@ CREATE TABLE `courses` (
   `course_code` varchar(10) NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
+  `level` tinyint(2) NOT NULL DEFAULT 1,
+  `semester` tinyint(2) NOT NULL DEFAULT 1,
   `instructor_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -61,12 +63,12 @@ CREATE TABLE `courses` (
 -- Dumping data for table `courses`
 --
 
-INSERT INTO `courses` (`id`, `course_code`, `title`, `description`, `instructor_id`) VALUES
-(17, 'CS202', 'web programmig', '', 21),
-(18, 'CS101', 'Data sturcture', '', 20),
-(19, 'CS301', 'system analyses', 'نظام معلوماتي', 22),
-(20, 'CS404', 'C++', '', 23),
-(21, 'CS94', 'oop', '', 24);
+INSERT INTO `courses` (`id`, `course_code`, `title`, `description`, `level`, `semester`, `instructor_id`) VALUES
+(17, 'CS202', 'web programmig', '', 2, 1, 21),
+(18, 'CS101', 'Data sturcture', '', 1, 1, 20),
+(19, 'CS301', 'system analyses', 'نظام معلوماتي', 3, 2, 22),
+(20, 'CS404', 'C++', '', 4, 2, 23),
+(21, 'CS94', 'oop', '', 1, 2, 24);
 
 -- --------------------------------------------------------
 
@@ -178,6 +180,20 @@ INSERT INTO `users` (`id`, `username`, `full_name`, `student_code`, `password`, 
 (23, 'doc3', 'Ziad', NULL, '123456', 'instructor'),
 (24, 'doc4', 'Ibrahem', NULL, '123456', 'instructor');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student_profiles`
+--
+
+CREATE TABLE `student_profiles` (
+  `student_id` int(11) NOT NULL,
+  `level` tinyint(2) NOT NULL,
+  `semester` tinyint(2) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Indexes for dumped tables
 --
@@ -224,6 +240,12 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `username` (`username`),
   ADD UNIQUE KEY `id` (`id`),
   ADD UNIQUE KEY `student_code` (`student_code`);
+
+--
+-- Indexes for table `student_profiles`
+--
+ALTER TABLE `student_profiles`
+  ADD PRIMARY KEY (`student_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -288,6 +310,12 @@ ALTER TABLE `materials`
 ALTER TABLE `submissions`
   ADD CONSTRAINT `submissions_ibfk_1` FOREIGN KEY (`assignment_id`) REFERENCES `assignments` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `submissions_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `student_profiles`
+--
+ALTER TABLE `student_profiles`
+  ADD CONSTRAINT `student_profiles_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

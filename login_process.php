@@ -32,11 +32,11 @@ if (isset($_POST['login'])) {
             
             $role = $user['role'];
             if ($role === 'admin') {
-                header("Location: admin/dashboard.php");
+                header("Location: dashboard.php");
             } elseif ($role === 'instructor') {
-                header("Location: instructor/index.php");
+                header("Location: manage_materials.php");
             } elseif ($role === 'student') {
-                header("Location: student/index.php");
+                header("Location: student_dashboard.php");
             }
             exit();
 
