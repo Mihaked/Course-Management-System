@@ -40,14 +40,8 @@ $sql = "INSERT INTO users (username, full_name, student_code, password, role)
         VALUES ('$username', '$full_name', " . (!empty($student_code) ? "'$student_code'" : "NULL") . ", '$hashed_password', 'student')";
 
 if ($conn->query($sql)) {
-    $user_id = $conn->insert_id;
-    $_SESSION['user_id'] = $user_id;
-    $_SESSION['username'] = $username;
-    $_SESSION['role'] = 'student';
-    $_SESSION['full_name'] = $full_name;
-
-    $_SESSION['success_message'] = "Welcome! Please choose your level and semester.";
-    header("Location: student_dashboard.php");
+    $_SESSION['success_message'] = "Registration successful! You can now log in.";
+    header("Location: register.php");
     exit();
 }
 

@@ -104,6 +104,12 @@ if (isset($_SESSION['role'])) {
         <h3 class="mb-3 fw-bold" style="color: #333;">Create Your Student Account</h3>
         <p class="text-muted mb-4">Register once, then choose your level and semester.</p>
 
+        <?php if (isset($_SESSION['success_message'])): ?>
+            <div class="alert alert-success py-2 mb-3" style="font-size: 0.9rem; border-radius: 15px;">
+                <?php echo $_SESSION['success_message']; unset($_SESSION['success_message']); ?>
+            </div>
+        <?php endif; ?>
+
         <?php if (isset($_SESSION['error'])): ?>
             <div class="alert alert-danger py-2 mb-3" style="font-size: 0.9rem; border-radius: 15px;">
                 <?php echo $_SESSION['error']; unset($_SESSION['error']); ?>
